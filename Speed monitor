@@ -1,0 +1,39 @@
+int ipin = 2; 
+float rpm; 
+volatile long p;
+unsigned long t;
+unsigned int ppt= 20;
+
+void counter()
+{
+   p++;
+}
+void setup()
+{
+     Serial.begin(9600);
+
+     pinMode(ipin, INPUT);
+   
+     attachInterrupt(0, counter, FALLING);
+    
+     p = 0;
+    rpm = 0;
+     t= 0;
+  }
+void loop()
+{
+     if (millis() - t== 10000) {
+      
+        detachInterrupt(0);
+         rpm =(p*6)/ppt;
+          t= millis();
+        // Serial.println(rpm);
+        Serial.println(" ");
+          Serial.println(String(rpm) + " RPM ");
+
+           p = 0;
+            
+          
+   attachInterrupt(0, counter, FALLING);
+   }
+  }
